@@ -67,37 +67,15 @@ namespace JPGScraper
         private void downloadJPG(string jpgURL, string series, string chapter, string page)
         {
             string direct = series + "/" + chapter + "/" + page + ".jpg";
-            //download jpgs using this
-          /*  System.Diagnostics.Debug.Write("Start Client: " + DateTime.Now.ToString() + "\n");
-              using(WebClient Client = new WebClient())
-              {
-                  //System.Diagnostics.Debug.Write(page+"\n");A
-                  
-                 // displayStatus("Downloading: " + series + " chapter:" + chapter + " page:" + page);
-                  
-                  System.Diagnostics.Debug.Write(direct + "\n");
-                  //System.Diagnostics.Debug.Write(jpgURL + "\n");
-                  System.Diagnostics.Debug.Write("Start downloadjpg: " + DateTime.Now.ToString() + "\n");
-                
-                
-                Client.Proxy = null;
-                try
-                {
-                    Client.DownloadFile(jpgURL, direct);
-                    System.Diagnostics.Debug.Write("End Stream: " + DateTime.Now.ToString() + "\n");
-                }
-                  catch(Exception e)
-                {
-                    System.Diagnostics.Debug.Write(e);
-                    downloadJPG(jpgURL, series, chapter, page);
-                }
-              }*/
-
+            
             System.IO.Directory.CreateDirectory(series);
             System.IO.Directory.CreateDirectory(series + "/" + chapter);
 
             WebClient webClient = new WebClient();
             webClient.Proxy = null;
+            //webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
+           // webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressChanged);
+            
             webClient.DownloadFileAsync(new Uri(jpgURL), direct);
         } 
 
@@ -117,12 +95,12 @@ namespace JPGScraper
             int index = html.IndexOf("return next_page();"); // get next page url
 
             html = html.Substring(0,index); // 45 to get rid of the html, goes straight to the url
-           // System.Diagnostics.Debug.Write(html);
+           
             index = html.LastIndexOf("a href=\"");
             html = html.Substring(index + 8); // get rid of a href="
             index = html.IndexOf("\"");
             html = html.Substring(0, index);
-            //System.Diagnostics.Debug.Write(html + "\n");
+            
             if (html == "javascript:void(0);")//if end of chapter, get next chapter
                 html = getNextChapter(htmlBackup);
             
@@ -142,27 +120,39 @@ namespace JPGScraper
             index = html.IndexOf("\"");// end html at next "
             html = html.Substring(0, index);
 
-           // System.Diagnostics.Debug.Write("asdfasdf" + html);
+           
             return html;
+        }
+
+        private void refreshCount(string series, string chapter, string page)
+        {
+            downloadCount++;
+            seriesLabel.Text = "Series: " + series;
+            chapterLabel.Text = "Chapter: " + chapter;
+            pageLabel.Text = "Page: " + page;
+            statusLabel.Text = Convert.ToString("Downloaded " + downloadCount + " pages so far");
+            
+            Application.DoEvents();
         }
         private void getJPGButton_Click(object sender, EventArgs e)
         {
             string url = urlBox.Text; // the fucking initial url
-           // MessageBox.Show(url);
+           
             while (true) // loop until can't find anymore urls
             {
-                displayStatus("Downloaded: " + Convert.ToString(++downloadCount) + " pages so far");
-                //System.Diagnostics.Debug.Write(url + "\n");
+                
+               // displayStatus("Downloaded: " + Convert.ToString(++downloadCount) + " pages so far");
+                
                 /*get HTML*/
-                System.Diagnostics.Debug.Write("Start HTTPWebRequest: " + DateTime.Now.ToString() + "\n");
+              
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 request.Proxy = null;
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                System.Diagnostics.Debug.Write("End HTTPWebRequest: " + DateTime.Now.ToString() + "\n");
+                
                 // checks if shit worked or not
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    System.Diagnostics.Debug.Write("Start Stream: " + DateTime.Now.ToString() + "\n");
+                   
                     Stream receiveStream = response.GetResponseStream();
                     StreamReader readStream = null;
 
@@ -176,7 +166,7 @@ namespace JPGScraper
                     }*/
                     readStream = new StreamReader(receiveStream);
                     string html = readStream.ReadToEnd();
-                    System.Diagnostics.Debug.Write("End Stream: " + DateTime.Now.ToString() + "\n");
+                   
                     response.Close();
                     readStream.Close();
                     string series = getSeriesName(html);
@@ -184,9 +174,9 @@ namespace JPGScraper
                     string page = getPage(html);
                     
                     string extracted = extractJPGFromHTML(html);
-                    //MessageBox.Show(extracted);
+                   
                     downloadJPG(extracted, series, chapter, page);
-                    //MessageBox.Show("getting chapter");
+              
                     
                     url = getNextURL(html);
                     if (url == "null")
@@ -194,8 +184,8 @@ namespace JPGScraper
                         MessageBox.Show("Finished downloading " + series);
                         return;
                     }
-                       
 
+                    refreshCount(series,chapter,page);
                 }
 
                 else // gotta try different url
@@ -207,16 +197,7 @@ namespace JPGScraper
 
            
         }
-
-        private void urlBox_TextChanged(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
+        
 
         
     }
