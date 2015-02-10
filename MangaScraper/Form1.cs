@@ -92,7 +92,7 @@ namespace JPGScraper
                     downloadJPG(jpgURL, series, chapter, page);
                 }
               }
-        }
+        } 
 
         private string extractJPGFromHTML(string html)
         {
