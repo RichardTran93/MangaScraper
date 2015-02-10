@@ -184,7 +184,7 @@ namespace JPGScraper
                     url = getNextURL(html);
                     if (url == "null")
                     {
-                        MessageBox.Show("Finished");
+                        MessageBox.Show("Finished downloading " + series);
                         return;
                     }
                        
