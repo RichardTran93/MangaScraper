@@ -67,9 +67,9 @@
             this.statusLabel.AutoSize = true;
             this.statusLabel.Location = new System.Drawing.Point(58, 160);
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(35, 13);
+            this.statusLabel.Size = new System.Drawing.Size(37, 13);
             this.statusLabel.TabIndex = 3;
-            this.statusLabel.Text = "label2";
+            this.statusLabel.Text = "Status";
             // 
             // Form1
             // 
@@ -81,7 +81,7 @@
             this.Controls.Add(this.getJPGButton);
             this.Controls.Add(this.urlBox);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "MangaScraper for Mangahere.co";
             this.ResumeLayout(false);
             this.PerformLayout();
 
