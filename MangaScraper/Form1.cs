@@ -67,6 +67,7 @@ namespace JPGScraper
         private void downloadJPG(string jpgURL, string series, string chapter, string page)
         {
             //download jpgs using this
+            System.Diagnostics.Debug.Write("Start Client: " + DateTime.Now.ToString() + "\n");
               using(WebClient Client = new WebClient())
               {
                   //System.Diagnostics.Debug.Write(page+"\n");
@@ -74,11 +75,22 @@ namespace JPGScraper
                   displayStatus("Downloading: " + series + " chapter:" + chapter + " page:" + page);
                   System.Diagnostics.Debug.Write(direct + "\n");
                   //System.Diagnostics.Debug.Write(jpgURL + "\n");
+                  System.Diagnostics.Debug.Write("Start downloadjpg: " + DateTime.Now.ToString() + "\n");
                 System.IO.Directory.CreateDirectory(series);
                 System.IO.Directory.CreateDirectory(series + "/" + chapter);
+                
                 Client.Proxy = null;
-                  Client.DownloadFile(jpgURL, direct);
-              }
+                try
+                {
+                    Client.DownloadFile(jpgURL, direct);
+                    System.Diagnostics.Debug.Write("End Stream: " + DateTime.Now.ToString() + "\n");
+                }
+                  catch(Exception e)
+                {
+                    System.Diagnostics.Debug.Write(e);
+                    downloadJPG(jpgURL, series, chapter, page);
+                }
+                }
         }
 
         private string extractJPGFromHTML(string html)
@@ -133,12 +145,14 @@ namespace JPGScraper
             {
                 //System.Diagnostics.Debug.Write(url + "\n");
                 /*get HTML*/
+                System.Diagnostics.Debug.Write("Start HTTPWebRequest: " + DateTime.Now.ToString() + "\n");
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-
+                System.Diagnostics.Debug.Write("End HTTPWebRequest: " + DateTime.Now.ToString() + "\n");
                 // checks if shit worked or not
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
+                    System.Diagnostics.Debug.Write("Start Stream: " + DateTime.Now.ToString() + "\n");
                     Stream receiveStream = response.GetResponseStream();
                     StreamReader readStream = null;
 
@@ -152,7 +166,7 @@ namespace JPGScraper
                     }*/
                     readStream = new StreamReader(receiveStream);
                     string html = readStream.ReadToEnd();
-                    
+                    System.Diagnostics.Debug.Write("End Stream: " + DateTime.Now.ToString() + "\n");
                     response.Close();
                     readStream.Close();
                     string series = getSeriesName(html);
