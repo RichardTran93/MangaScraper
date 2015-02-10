@@ -15,7 +15,7 @@ namespace JPGScraper
 {
     public partial class Form1 : Form
     {
-     
+        int downloadCount = 0;
         public Form1()
         {
             InitializeComponent();
@@ -72,7 +72,8 @@ namespace JPGScraper
               {
                   //System.Diagnostics.Debug.Write(page+"\n");
                   string direct = series + "/" + chapter + "/" + page + ".jpg";
-                  displayStatus("Downloading: " + series + " chapter:" + chapter + " page:" + page);
+                 // displayStatus("Downloading: " + series + " chapter:" + chapter + " page:" + page);
+                  
                   System.Diagnostics.Debug.Write(direct + "\n");
                   //System.Diagnostics.Debug.Write(jpgURL + "\n");
                   System.Diagnostics.Debug.Write("Start downloadjpg: " + DateTime.Now.ToString() + "\n");
@@ -90,7 +91,7 @@ namespace JPGScraper
                     System.Diagnostics.Debug.Write(e);
                     downloadJPG(jpgURL, series, chapter, page);
                 }
-                }
+              }
         }
 
         private string extractJPGFromHTML(string html)
@@ -143,10 +144,12 @@ namespace JPGScraper
            // MessageBox.Show(url);
             while (true) // loop until can't find anymore urls
             {
+                displayStatus("Downloaded: " + Convert.ToString(++downloadCount) + " pages so far");
                 //System.Diagnostics.Debug.Write(url + "\n");
                 /*get HTML*/
                 System.Diagnostics.Debug.Write("Start HTTPWebRequest: " + DateTime.Now.ToString() + "\n");
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.Proxy = null;
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                 System.Diagnostics.Debug.Write("End HTTPWebRequest: " + DateTime.Now.ToString() + "\n");
                 // checks if shit worked or not
@@ -177,7 +180,7 @@ namespace JPGScraper
                     //MessageBox.Show(extracted);
                     downloadJPG(extracted, series, chapter, page);
                     //MessageBox.Show("getting chapter");
-
+                    
                     url = getNextURL(html);
                     if (url == "null")
                     {
