@@ -66,19 +66,19 @@ namespace JPGScraper
         }
         private void downloadJPG(string jpgURL, string series, string chapter, string page)
         {
+            string direct = series + "/" + chapter + "/" + page + ".jpg";
             //download jpgs using this
-            System.Diagnostics.Debug.Write("Start Client: " + DateTime.Now.ToString() + "\n");
+          /*  System.Diagnostics.Debug.Write("Start Client: " + DateTime.Now.ToString() + "\n");
               using(WebClient Client = new WebClient())
               {
-                  //System.Diagnostics.Debug.Write(page+"\n");
-                  string direct = series + "/" + chapter + "/" + page + ".jpg";
+                  //System.Diagnostics.Debug.Write(page+"\n");A
+                  
                  // displayStatus("Downloading: " + series + " chapter:" + chapter + " page:" + page);
                   
                   System.Diagnostics.Debug.Write(direct + "\n");
                   //System.Diagnostics.Debug.Write(jpgURL + "\n");
                   System.Diagnostics.Debug.Write("Start downloadjpg: " + DateTime.Now.ToString() + "\n");
-                System.IO.Directory.CreateDirectory(series);
-                System.IO.Directory.CreateDirectory(series + "/" + chapter);
+                
                 
                 Client.Proxy = null;
                 try
@@ -91,7 +91,14 @@ namespace JPGScraper
                     System.Diagnostics.Debug.Write(e);
                     downloadJPG(jpgURL, series, chapter, page);
                 }
-              }
+              }*/
+
+            System.IO.Directory.CreateDirectory(series);
+            System.IO.Directory.CreateDirectory(series + "/" + chapter);
+
+            WebClient webClient = new WebClient();
+            webClient.Proxy = null;
+            webClient.DownloadFileAsync(new Uri(jpgURL), direct);
         } 
 
         private string extractJPGFromHTML(string html)
