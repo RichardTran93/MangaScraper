@@ -17,9 +17,12 @@ namespace JPGScraper
     {
         int downloadCount = 0;
         bool stopRequest = false;
+        bool folders = true;
+        
         public Form1()
         {
             InitializeComponent();
+            radioOrganize1.Checked = true;
         }
 
         private void displayStatus(string status)
@@ -67,17 +70,33 @@ namespace JPGScraper
         }
         private void downloadJPG(string jpgURL, string series, string chapter, string page)
         {
-            string direct = series + "/" + chapter + "/" + page + ".jpg";
+            string direct = "";
+            if (folders)
+            {
+                System.IO.Directory.CreateDirectory(series + "/" + chapter);
+                direct = series + "/" + chapter + "/" + page + ".jpg";
+            }
+            else
+            {
+                System.IO.Directory.CreateDirectory(series);
+                direct = series + "/" + downloadCount + ".jpg";
+            }
             
-            System.IO.Directory.CreateDirectory(series);
-            System.IO.Directory.CreateDirectory(series + "/" + chapter);
 
-            WebClient webClient = new WebClient();
-            webClient.Proxy = null;
-            //webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
-           // webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressChanged);
-            
-            webClient.DownloadFileAsync(new Uri(jpgURL), direct);
+            try
+            {
+                WebClient webClient = new WebClient();
+                webClient.Proxy = null;
+                //webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
+                // webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressChanged);
+
+                webClient.DownloadFileAsync(new Uri(jpgURL), direct);
+            }
+            catch(Exception e)
+            {
+                System.Diagnostics.Debug.Write(e);
+                downloadJPG(jpgURL, series, chapter, page);
+            }
         } 
 
         private string extractJPGFromHTML(string html)
@@ -220,6 +239,18 @@ namespace JPGScraper
             stopRequest = true;
             Application.DoEvents();
         }
+
+        private void radioOrganize1_CheckedChanged(object sender, EventArgs e)
+        {
+            folders = true;
+        }
+
+        private void radioOrganize0_CheckedChanged(object sender, EventArgs e)
+        {
+            folders = false;
+        }
+
+     
         
 
         

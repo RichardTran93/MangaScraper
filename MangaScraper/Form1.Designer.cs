@@ -36,11 +36,15 @@
             this.chapterLabel = new System.Windows.Forms.Label();
             this.pageLabel = new System.Windows.Forms.Label();
             this.stopButton = new System.Windows.Forms.Button();
+            this.radioGroupBox = new System.Windows.Forms.GroupBox();
+            this.radioOrganize1 = new System.Windows.Forms.RadioButton();
+            this.radioOrganize0 = new System.Windows.Forms.RadioButton();
+            this.radioGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // urlBox
             // 
-            this.urlBox.Location = new System.Drawing.Point(61, 54);
+            this.urlBox.Location = new System.Drawing.Point(239, 52);
             this.urlBox.Name = "urlBox";
             this.urlBox.Size = new System.Drawing.Size(165, 35);
             this.urlBox.TabIndex = 0;
@@ -49,9 +53,9 @@
             // getJPGButton
             // 
             this.getJPGButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.getJPGButton.Location = new System.Drawing.Point(62, 107);
+            this.getJPGButton.Location = new System.Drawing.Point(239, 105);
             this.getJPGButton.Name = "getJPGButton";
-            this.getJPGButton.Size = new System.Drawing.Size(83, 38);
+            this.getJPGButton.Size = new System.Drawing.Size(84, 38);
             this.getJPGButton.TabIndex = 1;
             this.getJPGButton.Text = "Get Manga!";
             this.getJPGButton.UseVisualStyleBackColor = true;
@@ -60,7 +64,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(101, 25);
+            this.label1.Location = new System.Drawing.Point(279, 23);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(86, 13);
             this.label1.TabIndex = 2;
@@ -71,7 +75,7 @@
             this.statusLabel.AutoSize = true;
             this.statusLabel.CausesValidation = false;
             this.statusLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.statusLabel.Location = new System.Drawing.Point(58, 160);
+            this.statusLabel.Location = new System.Drawing.Point(236, 158);
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.Size = new System.Drawing.Size(37, 13);
             this.statusLabel.TabIndex = 3;
@@ -80,7 +84,7 @@
             // seriesLabel
             // 
             this.seriesLabel.AutoSize = true;
-            this.seriesLabel.Location = new System.Drawing.Point(59, 187);
+            this.seriesLabel.Location = new System.Drawing.Point(237, 185);
             this.seriesLabel.Name = "seriesLabel";
             this.seriesLabel.Size = new System.Drawing.Size(36, 13);
             this.seriesLabel.TabIndex = 4;
@@ -89,7 +93,7 @@
             // chapterLabel
             // 
             this.chapterLabel.AutoSize = true;
-            this.chapterLabel.Location = new System.Drawing.Point(59, 217);
+            this.chapterLabel.Location = new System.Drawing.Point(237, 215);
             this.chapterLabel.Name = "chapterLabel";
             this.chapterLabel.Size = new System.Drawing.Size(44, 13);
             this.chapterLabel.TabIndex = 5;
@@ -98,7 +102,7 @@
             // pageLabel
             // 
             this.pageLabel.AutoSize = true;
-            this.pageLabel.Location = new System.Drawing.Point(194, 217);
+            this.pageLabel.Location = new System.Drawing.Point(372, 215);
             this.pageLabel.Name = "pageLabel";
             this.pageLabel.Size = new System.Drawing.Size(32, 13);
             this.pageLabel.TabIndex = 6;
@@ -107,13 +111,50 @@
             // stopButton
             // 
             this.stopButton.CausesValidation = false;
-            this.stopButton.Location = new System.Drawing.Point(151, 107);
+            this.stopButton.Location = new System.Drawing.Point(329, 105);
             this.stopButton.Name = "stopButton";
-            this.stopButton.Size = new System.Drawing.Size(86, 38);
+            this.stopButton.Size = new System.Drawing.Size(75, 38);
             this.stopButton.TabIndex = 7;
             this.stopButton.Text = "Double Click to Stop";
             this.stopButton.UseVisualStyleBackColor = true;
             this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
+            // 
+            // radioGroupBox
+            // 
+            this.radioGroupBox.BackColor = System.Drawing.Color.Transparent;
+            this.radioGroupBox.Controls.Add(this.radioOrganize1);
+            this.radioGroupBox.Controls.Add(this.radioOrganize0);
+            this.radioGroupBox.Location = new System.Drawing.Point(12, 52);
+            this.radioGroupBox.Name = "radioGroupBox";
+            this.radioGroupBox.Size = new System.Drawing.Size(119, 75);
+            this.radioGroupBox.TabIndex = 8;
+            this.radioGroupBox.TabStop = false;
+            // 
+            // radioOrganize1
+            // 
+            this.radioOrganize1.AutoSize = true;
+            this.radioOrganize1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.radioOrganize1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.radioOrganize1.Location = new System.Drawing.Point(0, 18);
+            this.radioOrganize1.Name = "radioOrganize1";
+            this.radioOrganize1.Size = new System.Drawing.Size(121, 17);
+            this.radioOrganize1.TabIndex = 9;
+            this.radioOrganize1.TabStop = true;
+            this.radioOrganize1.Text = "Organize into folders";
+            this.radioOrganize1.UseVisualStyleBackColor = true;
+            this.radioOrganize1.CheckedChanged += new System.EventHandler(this.radioOrganize1_CheckedChanged);
+            // 
+            // radioOrganize0
+            // 
+            this.radioOrganize0.AutoSize = true;
+            this.radioOrganize0.Location = new System.Drawing.Point(0, 43);
+            this.radioOrganize0.Name = "radioOrganize0";
+            this.radioOrganize0.Size = new System.Drawing.Size(97, 17);
+            this.radioOrganize0.TabIndex = 10;
+            this.radioOrganize0.TabStop = true;
+            this.radioOrganize0.Text = "All in one folder";
+            this.radioOrganize0.UseVisualStyleBackColor = true;
+            this.radioOrganize0.CheckedChanged += new System.EventHandler(this.radioOrganize0_CheckedChanged);
             // 
             // Form1
             // 
@@ -121,7 +162,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.getJPGButton;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.ClientSize = new System.Drawing.Size(428, 261);
+            this.Controls.Add(this.radioGroupBox);
             this.Controls.Add(this.stopButton);
             this.Controls.Add(this.pageLabel);
             this.Controls.Add(this.chapterLabel);
@@ -132,6 +174,8 @@
             this.Controls.Add(this.urlBox);
             this.Name = "Form1";
             this.Text = "MangaScraper for Mangahere.co";
+            this.radioGroupBox.ResumeLayout(false);
+            this.radioGroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -147,6 +191,9 @@
         private System.Windows.Forms.Label chapterLabel;
         private System.Windows.Forms.Label pageLabel;
         private System.Windows.Forms.Button stopButton;
+        private System.Windows.Forms.GroupBox radioGroupBox;
+        private System.Windows.Forms.RadioButton radioOrganize1;
+        private System.Windows.Forms.RadioButton radioOrganize0;
     }
 }
 
