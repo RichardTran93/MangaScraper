@@ -16,6 +16,7 @@ namespace JPGScraper
     public partial class Form1 : Form
     {
         int downloadCount = 0;
+        bool stopRequest = false;
         public Form1()
         {
             InitializeComponent();
@@ -144,10 +145,20 @@ namespace JPGScraper
                // displayStatus("Downloaded: " + Convert.ToString(++downloadCount) + " pages so far");
                 
                 /*get HTML*/
-              
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-                request.Proxy = null;
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                HttpWebRequest request;
+                HttpWebResponse response;
+                try
+                {
+                    request = (HttpWebRequest)WebRequest.Create(url);
+                    request.Proxy = null;
+                    response = (HttpWebResponse)request.GetResponse();
+                }
+                catch(Exception err)
+                {
+                    System.Diagnostics.Debug.Write(err);
+                    continue;
+                }
+                
                 
                 // checks if shit worked or not
                 if (response.StatusCode == HttpStatusCode.OK)
@@ -184,6 +195,12 @@ namespace JPGScraper
                         MessageBox.Show("Finished downloading " + series);
                         return;
                     }
+                    if(stopRequest)
+                    {
+                        MessageBox.Show("Stopped downloading " + series + " after " + Convert.ToString(downloadCount) + " pages");
+                        stopRequest = false;
+                        return;
+                    }
 
                     refreshCount(series,chapter,page);
                 }
@@ -196,6 +213,12 @@ namespace JPGScraper
 
 
            
+        }
+
+        private void stopButton_Click(object sender, EventArgs e)
+        {
+            stopRequest = true;
+            Application.DoEvents();
         }
         
 

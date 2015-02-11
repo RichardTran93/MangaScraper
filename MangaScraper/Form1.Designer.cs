@@ -35,6 +35,7 @@
             this.seriesLabel = new System.Windows.Forms.Label();
             this.chapterLabel = new System.Windows.Forms.Label();
             this.pageLabel = new System.Windows.Forms.Label();
+            this.stopButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // urlBox
@@ -48,9 +49,9 @@
             // getJPGButton
             // 
             this.getJPGButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.getJPGButton.Location = new System.Drawing.Point(104, 107);
+            this.getJPGButton.Location = new System.Drawing.Point(62, 107);
             this.getJPGButton.Name = "getJPGButton";
-            this.getJPGButton.Size = new System.Drawing.Size(75, 23);
+            this.getJPGButton.Size = new System.Drawing.Size(83, 38);
             this.getJPGButton.TabIndex = 1;
             this.getJPGButton.Text = "Get Manga!";
             this.getJPGButton.UseVisualStyleBackColor = true;
@@ -103,6 +104,17 @@
             this.pageLabel.TabIndex = 6;
             this.pageLabel.Text = "Page";
             // 
+            // stopButton
+            // 
+            this.stopButton.CausesValidation = false;
+            this.stopButton.Location = new System.Drawing.Point(151, 107);
+            this.stopButton.Name = "stopButton";
+            this.stopButton.Size = new System.Drawing.Size(86, 38);
+            this.stopButton.TabIndex = 7;
+            this.stopButton.Text = "Double Click to Stop";
+            this.stopButton.UseVisualStyleBackColor = true;
+            this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
+            // 
             // Form1
             // 
             this.AcceptButton = this.getJPGButton;
@@ -110,6 +122,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.getJPGButton;
             this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.stopButton);
             this.Controls.Add(this.pageLabel);
             this.Controls.Add(this.chapterLabel);
             this.Controls.Add(this.seriesLabel);
@@ -133,6 +146,7 @@
         private System.Windows.Forms.Label seriesLabel;
         private System.Windows.Forms.Label chapterLabel;
         private System.Windows.Forms.Label pageLabel;
+        private System.Windows.Forms.Button stopButton;
     }
 }
 
