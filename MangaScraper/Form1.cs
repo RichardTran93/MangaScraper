@@ -148,7 +148,7 @@ namespace JPGScraper
                 HttpWebRequest request;
                 HttpWebResponse response;
                 try
-                {
+                { 
                     request = (HttpWebRequest)WebRequest.Create(url);
                     request.Proxy = null;
                     response = (HttpWebResponse)request.GetResponse();
