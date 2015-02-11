@@ -157,7 +157,7 @@ namespace JPGScraper
         private void getJPGButton_Click(object sender, EventArgs e)
         {
             string url = urlBox.Text; // the fucking initial url
-           
+            downloadCount = 0;
             while (true) // loop until can't find anymore urls
             {
                 
