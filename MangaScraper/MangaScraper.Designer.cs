@@ -1,6 +1,6 @@
-﻿namespace JPGScraper
+﻿namespace MangaScraper
 {
-    partial class Form1
+    partial class MangaScraper
     {
         /// <summary>
         /// Required designer variable.

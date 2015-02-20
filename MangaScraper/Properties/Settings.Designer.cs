@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace JPGScraper.Properties
+namespace MangaScraper.Properties
 {
 
 

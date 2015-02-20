@@ -11,15 +11,16 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace JPGScraper
+namespace MangaScraper
 {
-    public partial class Form1 : Form
+    public partial class MangaScraper : Form
     {
         int downloadCount = 0;
+        int completedCount = 0;
         bool stopRequest = false;
         bool folders = true;
         
-        public Form1()
+        public MangaScraper()
         {
             InitializeComponent();
             radioOrganize1.Checked = true;
@@ -29,7 +30,7 @@ namespace JPGScraper
         {
             statusLabel.Text = status;
         }
-        private string getChapter(string html)
+        /*private string getChapter(string html)
         {
             //MessageBox.Show("getting shit");
             //System.Diagnostics.Debug.Write(html);
@@ -67,8 +68,8 @@ namespace JPGScraper
             index = series.IndexOf("\"");
             series = series.Substring(0, index);
             return series;
-        }
-        private void downloadJPG(string jpgURL, string series, string chapter, string page)
+        }*/
+        private async void downloadJPG(string jpgURL, string series, string chapter, string page)
         {
             string direct = "";
             if (folders)
@@ -90,7 +91,8 @@ namespace JPGScraper
                 //webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
                 // webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressChanged);
 
-                webClient.DownloadFileAsync(new Uri(jpgURL), direct);
+                await webClient.DownloadFileTaskAsync(new Uri(jpgURL), direct);
+                completedCount++;
             }
             catch(Exception e)
             {
@@ -150,7 +152,7 @@ namespace JPGScraper
             seriesLabel.Text = "Series: " + series;
             chapterLabel.Text = "Chapter: " + chapter;
             pageLabel.Text = "Page: " + page;
-            statusLabel.Text = Convert.ToString("Downloaded " + downloadCount + " pages so far");
+            statusLabel.Text = Convert.ToString("Downloaded " + downloadCount + " pages so far" + " \ncompleted: " + completedCount);
             
             Application.DoEvents();
         }
@@ -158,6 +160,7 @@ namespace JPGScraper
         {
             string url = urlBox.Text; // the fucking initial url
             downloadCount = 0;
+            MangaHere mangaHere = new MangaHere();
             while (true) // loop until can't find anymore urls
             {
                 
@@ -199,9 +202,9 @@ namespace JPGScraper
                    
                     response.Close();
                     readStream.Close();
-                    string series = getSeriesName(html);
-                    string chapter = getChapter(html);
-                    string page = getPage(html);
+                    string series = mangaHere.getSeriesName(html);
+                    string chapter = mangaHere.getChapter(html);
+                    string page = mangaHere.getPage(html);
                     
                     string extracted = extractJPGFromHTML(html);
                    
