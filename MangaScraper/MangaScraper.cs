@@ -44,7 +44,6 @@ namespace MangaScraper
                 System.IO.Directory.CreateDirectory(series);
                 direct = series + "/" + downloadCount + ".jpg";//else just series/page.jpg
             }
-
             /*download the file, but since it's async, open tons of threads and start downloads 
              * for multiple jpgs at once. Completed count only increments when the file 
              * completely finishes downloading
@@ -70,11 +69,10 @@ namespace MangaScraper
         /*this method sets the display of the UI to the current series name/chapter/page number*/
         private void refreshCount(string series, string chapter, string page)
         {
-            downloadCount++;
             seriesLabel.Text = "Series: " + series;
             chapterLabel.Text = "Chapter: " + chapter;
             pageLabel.Text = "Page: " + page;
-            statusLabel.Text = Convert.ToString("Downloaded " + downloadCount + " pages so far" + " \ncompleted: " + completedCount);
+            statusLabel.Text = Convert.ToString("Downloading " + downloadCount + " pages so far" + " \nCompleted:    " + completedCount);
             
             Application.DoEvents();
         }
@@ -94,7 +92,6 @@ namespace MangaScraper
             {
                 
                     html = client.getHTML(url);//get raw html
-                    
                     //pull series/chapter/page from html
                     series = mangaHere.getSeriesName(html);
                     chapter = mangaHere.getChapter(html);
@@ -105,23 +102,32 @@ namespace MangaScraper
 
                     //actually download the jpg
                     downloadJPG(extracted, series, chapter, page);
+                    downloadCount++;
+                    refreshCount(series, chapter, page);//sets UI to updated chapter/page number
 
                     //prep for next url to get
                     url = client.getNextURL(html);
                     if (url == "null")
-                    {
-                        MessageBox.Show("Finished downloading " + series);
-                        return;
-                    }
+                        break; 
+
                     if(stopRequest)
                     {
                         MessageBox.Show("Stopped downloading " + series + " after " + Convert.ToString(downloadCount) + " pages");
                         stopRequest = false;
                         return;
                     }
-                    refreshCount(series,chapter,page);//sets UI to updated chapter/page number
+                   
             }
- 
+            while(true)//this loop waits for all pages to complete before saying it's finished everything
+            {
+                refreshCount(series, chapter, page);
+                if (completedCount == downloadCount)
+                {
+                    refreshCount(series, chapter, page);
+                    MessageBox.Show("Finished downloading " + series);
+                    return;
+                }
+            }
         }
 
         private void stopButton_Click(object sender, EventArgs e)
