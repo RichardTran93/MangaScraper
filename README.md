@@ -10,4 +10,4 @@ Pick any manga, at any chapter, at any page
 The scraper -->should<-- create a folder in the following structure
 mangaName/chapter/page.jpg
 
-https://github.com/RichardTran93/MangaScraper/blob/master/MangaScraper/bin/Debug/MangaScraper.exe
+[Beta Version Download Link](https://github.com/RichardTran93/MangaScraper/blob/master/MangaScraper/bin/Debug/MangaScraper.exe?raw=true)
