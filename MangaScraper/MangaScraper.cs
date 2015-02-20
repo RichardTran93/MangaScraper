@@ -28,7 +28,7 @@ namespace MangaScraper
 
         private void displayStatus(string status)
         {
-            statusLabel.Text = status;
+            statusLabel.Text = status;//set textbox to current status
         }
         
         private async void downloadJPG(string jpgURL, string series, string chapter, string page)
@@ -36,70 +36,38 @@ namespace MangaScraper
             string direct = "";
             if (folders)
             {
-                System.IO.Directory.CreateDirectory(series + "/" + chapter);
-                direct = series + "/" + chapter + "/" + page + ".jpg";
+                System.IO.Directory.CreateDirectory(series + "/" + chapter);//creates directory if not exists
+                direct = series + "/" + chapter + "/" + page + ".jpg";//sets in series/chapter/page.jpg format
             }
             else
             {
                 System.IO.Directory.CreateDirectory(series);
-                direct = series + "/" + downloadCount + ".jpg";
+                direct = series + "/" + downloadCount + ".jpg";//else just series/page.jpg
             }
-            
 
-            try
+            /*download the file, but since it's async, open tons of threads and start downloads 
+             * for multiple jpgs at once. Completed count only increments when the file 
+             * completely finishes downloading
+             */
+            while (true)
             {
-                WebClient webClient = new WebClient();
-                webClient.Proxy = null;
-                //webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(Completed);
-                // webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(ProgressChanged);
-
-                await webClient.DownloadFileTaskAsync(new Uri(jpgURL), direct);
-                completedCount++;
-            }
-            catch(Exception e)
-            {
-                System.Diagnostics.Debug.Write(e);
-                downloadJPG(jpgURL, series, chapter, page);
+                try
+                {
+                    WebClient webClient = new WebClient();
+                    webClient.Proxy = null;//stupid thing takes eons to try to get IE (yes IE) proxy settings before downloading
+                    await webClient.DownloadFileTaskAsync(new Uri(jpgURL), direct);//waits for it to finish before incrementing completedCount
+                    completedCount++;
+                    break;
+                }
+                catch (Exception e)//if download fails, try again
+                {
+                    System.Diagnostics.Debug.Write(e);
+                    continue;
+                }
             }
         } 
 
-       
-        
-        private string getNextURL(string html)
-        {
-            string htmlBackup = html;
-            int index = html.IndexOf("return next_page();"); // get next page url
-
-            html = html.Substring(0,index); // 45 to get rid of the html, goes straight to the url
-           
-            index = html.LastIndexOf("a href=\"");
-            html = html.Substring(index + 8); // get rid of a href="
-            index = html.IndexOf("\"");
-            html = html.Substring(0, index);
-            
-            if (html == "javascript:void(0);")//if end of chapter, get next chapter
-                html = getNextChapter(htmlBackup);
-            
-            return html;
-        }
-        private string getNextChapter(string html)
-        {
-            int index = html.IndexOf("Next Chapter:");//get index of next chapter url
-            if (index == -1)
-            {
-                return "null";
-            }
-               
-            html = html.Substring(index);
-            index = html.IndexOf("\"");//start html at first "
-            html = html.Substring(index + 1);//get rid of the first "
-            index = html.IndexOf("\"");// end html at next "
-            html = html.Substring(0, index);
-
-           
-            return html;
-        }
-
+        /*this method sets the display of the UI to the current series name/chapter/page number*/
         private void refreshCount(string series, string chapter, string page)
         {
             downloadCount++;
@@ -110,27 +78,36 @@ namespace MangaScraper
             
             Application.DoEvents();
         }
+
+        /*when get manga button is clicked, extract url from the textbox
+         * then extract the html, then get the jpg link from the html and
+         * download everything
+         */
         private void getJPGButton_Click(object sender, EventArgs e)
         {
-            string url = urlBox.Text; // the fucking initial url
-            downloadCount = 0;
+            string url = urlBox.Text;//gets the url from the box
             MangaHere mangaHere = new MangaHere();
             WebPage client = new WebPage();
             string html = "";
+            string series, chapter, page, extracted = "";
             while (true) // loop until can't find anymore urls
             {
                 
-                    html = client.getHTML(url);
-                    string series = mangaHere.getSeriesName(html);
-                    string chapter = mangaHere.getChapter(html);
-                    string page = mangaHere.getPage(html);
+                    html = client.getHTML(url);//get raw html
                     
-                    string extracted = client.extractJPGFromHTML(html);
-                   
+                    //pull series/chapter/page from html
+                    series = mangaHere.getSeriesName(html);
+                    chapter = mangaHere.getChapter(html);
+                    page = mangaHere.getPage(html);     
+               
+                    
+                    extracted = client.extractJPGFromHTML(html);//gets the jpg url 
+
+                    //actually download the jpg
                     downloadJPG(extracted, series, chapter, page);
-              
-                    
-                    url = getNextURL(html);
+
+                    //prep for next url to get
+                    url = client.getNextURL(html);
                     if (url == "null")
                     {
                         MessageBox.Show("Finished downloading " + series);
@@ -142,19 +119,15 @@ namespace MangaScraper
                         stopRequest = false;
                         return;
                     }
-
-                    refreshCount(series,chapter,page);
-               
+                    refreshCount(series,chapter,page);//sets UI to updated chapter/page number
             }
-
-
-           
+ 
         }
 
         private void stopButton_Click(object sender, EventArgs e)
         {
             stopRequest = true;
-            Application.DoEvents();
+            Application.DoEvents();//magical method that stops everything
         }
 
         private void radioOrganize1_CheckedChanged(object sender, EventArgs e)
@@ -166,10 +139,6 @@ namespace MangaScraper
         {
             folders = false;
         }
-
-     
-        
-
-        
+  
     }
 }

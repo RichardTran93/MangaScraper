@@ -65,4 +65,39 @@ public class WebPage
         html = html.Substring(0, index - 1);
         return html;
     }
+    public string getNextURL(string html)
+    {
+        string htmlBackup = html;
+        int index = html.IndexOf("return next_page();"); // get next page url
+
+        html = html.Substring(0, index); // 45 to get rid of the html, goes straight to the url
+
+        index = html.LastIndexOf("a href=\"");
+        html = html.Substring(index + 8); // get rid of a href="
+        index = html.IndexOf("\"");
+        html = html.Substring(0, index);
+
+        if (html == "javascript:void(0);")//if end of chapter, get next chapter
+            html = getNextChapter(htmlBackup);
+
+        return html;
+    }
+
+    public string getNextChapter(string html)
+    {
+        int index = html.IndexOf("Next Chapter:");//get index of next chapter url
+        if (index == -1)
+        {
+            return "null";
+        }
+
+        html = html.Substring(index);
+        index = html.IndexOf("\"");//start html at first "
+        html = html.Substring(index + 1);//get rid of the first "
+        index = html.IndexOf("\"");// end html at next "
+        html = html.Substring(0, index);
+
+
+        return html;
+    }
 }
