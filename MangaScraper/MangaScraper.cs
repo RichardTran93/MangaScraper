@@ -24,7 +24,7 @@ namespace MangaScraper
         int completedCount = 0;
         bool stopRequest = false;
         bool folders = true;
-        
+        Manga manga = new MangaHere(); // default is MangaHere
         public MangaScraper()
         {
             InitializeComponent();
@@ -89,21 +89,35 @@ namespace MangaScraper
         private void getJPGButton_Click(object sender, EventArgs e)
         {
             WebPage client = new WebPage();
-            MangaHere mangaHere = new MangaHere();
-            MangaPanda mangaPanda = new MangaPanda();
+            string html = "";
+            string series = "";
+            string chapter = "";
+            string page = "";
+            string extracted = "";
             downloadCount = 0;
             completedCount = 0;
+
             string url = urlBox.Text;//gets the url from the box
+            html = client.getHTML(url);
+            switch(client.getDomain(url))
+            {
+                case "mangahere":
+                    {
+                        manga = new MangaHere();
+                        break;
+                    }
+                case "mangapanda":
+                    {
+                        manga = new MangaPanda();
+                        break;
+                    }
+            }
             if(url == "")
             {
                 MessageBox.Show("Please enter url into the box first!");
                 return;
             }
-            string html = "";
-            string series = "";
-            string chapter = "";
-            string page = ""; 
-            string extracted = "";
+            
             while (true) // loop until can't find anymore urls
             {
                 
@@ -114,34 +128,17 @@ namespace MangaScraper
                         return;
                     }
                     //pull series/chapter/page from html
-                    switch(client.getDomain(url))
-                    {
-                        case "mangahere":
-                            {
-                                url = mangaHere.getNextURL(html);
-                                if (url == "null")
-                                    break; 
-                                series = mangaHere.getSeriesName(html);
-                                chapter = mangaHere.getChapter(html);
-                                page = mangaHere.getPage(html);
-                                extracted = mangaHere.extractJPGFromHTML(html);
-                                break;
-                            }
-                        case "mangapanda":
-                            {
-                                url = mangaPanda.getNextURL(html);
-                                if (url == "null")
-                                    break; 
-                                series = mangaPanda.getSeriesName(html);
-                                chapter = mangaPanda.getChapter(html);
-                                page = mangaPanda.getPage(html);
-                                extracted = mangaPanda.extractJPGFromHTML(html);
-                                break;
-                            }
-                        default:
-                            System.Diagnostics.Debug.Write(client.getDomain(url));
-                            break;
-                    }
+                    
+                                
+                url = manga.getNextURL(html);
+                if (url == "null")
+                    break;                               
+                series = manga.getSeriesName(html);                                
+                chapter = manga.getChapter(html);                                
+                page = manga.getPage(html);                                
+                extracted = manga.extractJPGFromHTML(html);
+                
+                       
                    
                     //actually download the jpg
                     downloadJPG(extracted, series, chapter, page);

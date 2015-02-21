@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Manga.cs" />
     <Compile Include="MangaHere.cs" />
     <Compile Include="MangaPanda.cs" />
     <Compile Include="MangaScraper.cs">

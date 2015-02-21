@@ -12,7 +12,7 @@ using System.Threading.Tasks;
  */
 namespace MangaScraper
 {
-    class MangaPanda
+    public class MangaPanda : Manga
     {
         public string extractJPGFromHTML(string html)
         {
