@@ -3,7 +3,7 @@ Experimental Build is in MangaScraper/bin/Debug folder
 
 Release build is in MangaScraper/bin/Release folder
 
-ONLY WORKS FOR mangahere.co AT THE MOMENT!!!
+ONLY WORKS FOR mangahere.co and mangapanda.com AT THE MOMENT!!!
 
 Pick any manga, at any chapter, at any page
 
