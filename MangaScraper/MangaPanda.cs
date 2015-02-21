@@ -33,28 +33,20 @@ namespace MangaScraper
         } 
         public string getNextURL(string html)
         {
-            if(html.IndexOf("is not released yet") != -1)
+            //if end of series/not released yet, signal End of series
+            if (html.IndexOf("is not released yet") != -1)
             {
                 return "null";
             }
-            //...<span class="next"><a href="/i-dont-want-this-kind-of-hero/33/2">Next</a>
-            int index = html.IndexOf("span class=\"next");
+            //...document['nl'] = '/bleach/616/2';
+            int index = html.IndexOf("document['nl']");
             string url = html.Substring(index);
-            //<span class="next"><a href="/i-dont-want-this-kind-of-hero/33/2">Next</a>
-            index = url.IndexOf("href=");
-            url = url.Substring(index);
-            //href="/i-dont-want-this-kind-of-hero/33/2">Next</a>
-            index = url.IndexOf("Next");
-            url = url.Substring(0, index);
-            //href="/i-dont-want-this-kind-of-hero/33/2">
-            index = url.IndexOf("\"");
-            url = url.Substring(index);
-            // /i-dont-want-this-kind-of-hero/33/2">
-            index = url.IndexOf("\"");
+            //document['nl'] = '/bleach/616/2';
+            index = url.IndexOf("'/");
             url = url.Substring(index + 1);
-            // /i-dont-want-this-kind-of-hero/33/2
-            index = url.IndexOf("\"");
-            url = url.Substring(0, index);
+            // /bleach/616/2';
+            index = url.IndexOf("'");
+            url = url.Substring(0,index);
             url = "http://www.mangapanda.com" + url;
             return url;
         }
@@ -102,7 +94,7 @@ namespace MangaScraper
 
         public string getNextChapter(string html)
         {
-
+            //mangapanda has no next chapter section, is linked in the next page
             return html;
         }
     }
