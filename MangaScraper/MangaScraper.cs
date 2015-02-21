@@ -10,7 +10,12 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+/* Richard Tran
+ * Manga Scraper
+ * MangaScraper.cs
+ * 02/2015
+ * https://github.com/RichardTran93/MangaScraper
+ */
 namespace MangaScraper
 {
     public partial class MangaScraper : Form

@@ -4,7 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-
+/* Richard Tran
+ * Manga Scraper
+ * MangaPanda.cs
+ * 02/2015
+ * https://github.com/RichardTran93/MangaScraper
+ */
 namespace MangaScraper
 {
     class MangaPanda

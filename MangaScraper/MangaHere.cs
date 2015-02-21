@@ -1,5 +1,11 @@
 ﻿using System;
 
+/* Richard Tran
+ * Manga Scraper
+ * MangaHere.cs
+ * 02/2015
+ * https://github.com/RichardTran93/MangaScraper
+ */
 /// <summary>
 /// Summary description for Class1
 /// </summary>

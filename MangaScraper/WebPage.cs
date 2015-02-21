@@ -2,7 +2,12 @@
 using System.IO;
 using System.Net;
 using System.Windows.Forms;
-
+/* Richard Tran
+ * Manga Scraper
+ * WebPage.cs
+ * 02/2015
+ * https://github.com/RichardTran93/MangaScraper
+ */
 /// <summary>
 /// Summary description for Class1
 /// </summary>
