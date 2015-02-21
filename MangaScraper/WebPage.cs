@@ -40,7 +40,7 @@ public class WebPage
         catch (Exception err)
         {
             System.Diagnostics.Debug.Write(err);
-            MessageBox.Show(Convert.ToString(err));
+            //MessageBox.Show(Convert.ToString(err));
             return "fail";
         }
         // checks if shit worked or not

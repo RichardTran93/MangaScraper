@@ -89,7 +89,11 @@ namespace MangaScraper
             downloadCount = 0;
             completedCount = 0;
             string url = urlBox.Text;//gets the url from the box
-
+            if(url == "")
+            {
+                MessageBox.Show("Please enter url into the box first!");
+                return;
+            }
             string html = "";
             string series = "";
             string chapter = "";
@@ -99,6 +103,11 @@ namespace MangaScraper
             {
                 
                     html = client.getHTML(url);//get raw html
+                    if(html == "fail")
+                    {
+                        MessageBox.Show("Invalid url. Please enter another one");
+                        return;
+                    }
                     //pull series/chapter/page from html
                     switch(client.getDomain(url))
                     {
@@ -154,10 +163,10 @@ namespace MangaScraper
                 {
                     refreshCount(series, chapter, page);
                     MessageBox.Show("Finished downloading " + series);
+                    Application.DoEvents();
                     return;
                 }
             }
-            Application.DoEvents();
         }
 
         private void stopButton_Click(object sender, EventArgs e)
