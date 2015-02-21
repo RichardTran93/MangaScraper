@@ -39,6 +39,7 @@
             this.radioGroupBox = new System.Windows.Forms.GroupBox();
             this.radioOrganize1 = new System.Windows.Forms.RadioButton();
             this.radioOrganize0 = new System.Windows.Forms.RadioButton();
+            this.label2 = new System.Windows.Forms.Label();
             this.radioGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -156,6 +157,16 @@
             this.radioOrganize0.UseVisualStyleBackColor = true;
             this.radioOrganize0.CheckedChanged += new System.EventHandler(this.radioOrganize0_CheckedChanged);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(-1, 247);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(237, 13);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "www.github.com/RichardTran93/MangaScraper";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
+            // 
             // MangaScraper
             // 
             this.AcceptButton = this.getJPGButton;
@@ -163,6 +174,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.getJPGButton;
             this.ClientSize = new System.Drawing.Size(428, 261);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.radioGroupBox);
             this.Controls.Add(this.stopButton);
             this.Controls.Add(this.pageLabel);
@@ -173,7 +185,7 @@
             this.Controls.Add(this.getJPGButton);
             this.Controls.Add(this.urlBox);
             this.Name = "MangaScraper";
-            this.Text = "MangaScraper for Mangahere.co";
+            this.Text = "MangaScraper";
             this.radioGroupBox.ResumeLayout(false);
             this.radioGroupBox.PerformLayout();
             this.ResumeLayout(false);
@@ -194,6 +206,7 @@
         private System.Windows.Forms.GroupBox radioGroupBox;
         private System.Windows.Forms.RadioButton radioOrganize1;
         private System.Windows.Forms.RadioButton radioOrganize0;
+        private System.Windows.Forms.Label label2;
     }
 }
 
