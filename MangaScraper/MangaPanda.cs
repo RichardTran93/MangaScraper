@@ -16,19 +16,9 @@ namespace MangaScraper
     {
         public string extractJPGFromHTML(string html)
         {
-            //...div id="imgholder">...src="[img url here]"
-            int index = html.IndexOf("div id=\"imgholder");
-            string jpgURL = html.Substring(index);
-            //div id="imgholder">...src="[img url here]"
-            index = jpgURL.IndexOf("src=");
-            jpgURL = jpgURL.Substring(index);
-            //src="[img url here]"
-            index = jpgURL.IndexOf("\"");
-            jpgURL = jpgURL.Substring(index + 1);
-            //[img url here]"
-            index = jpgURL.IndexOf("\"");
-            jpgURL = jpgURL.Substring(0, index);
-            //[img url here]
+            //src="URL WE WANT HERE" alt="Bleach 616 .....
+            Match match = Regex.Match(html, @"(?<=src="")(.*)(?="" alt)");//HAHAHHA REGEX FML
+            string jpgURL = match.Groups[1].Value;
             return jpgURL;
         } 
         public string getNextURL(string html)
@@ -68,16 +58,10 @@ namespace MangaScraper
 
         public string getChapter(string html)
         {
-            //...document['chapterno'] = 175;
-            int index = html.IndexOf("document['chapterno']");
-            string chapter = html.Substring(index);
-            //document['chapterno'] = 175;
-            index = chapter.IndexOf("=");
-            chapter = chapter.Substring(index + 2);
-            //175;
-            index = chapter.IndexOf(";");
-            chapter = chapter.Substring(0, index);
-            //175
+            //document['chapterno'] = 616;
+            //why am i doing this to myself
+            Match match = Regex.Match(html, @"(?<=document\[\'chapterno\'\] = )(.*)(?=;)");
+            string chapter = match.Groups[1].Value;
             return chapter;
         }
 

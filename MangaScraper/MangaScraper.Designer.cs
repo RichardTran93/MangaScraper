@@ -115,7 +115,7 @@
             this.stopButton.Name = "stopButton";
             this.stopButton.Size = new System.Drawing.Size(75, 38);
             this.stopButton.TabIndex = 7;
-            this.stopButton.Text = "Double Click to Stop";
+            this.stopButton.Text = "Click to Stop";
             this.stopButton.UseVisualStyleBackColor = true;
             this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
             // 
@@ -156,7 +156,7 @@
             this.radioOrganize0.UseVisualStyleBackColor = true;
             this.radioOrganize0.CheckedChanged += new System.EventHandler(this.radioOrganize0_CheckedChanged);
             // 
-            // Form1
+            // MangaScraper
             // 
             this.AcceptButton = this.getJPGButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -172,7 +172,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.getJPGButton);
             this.Controls.Add(this.urlBox);
-            this.Name = "Form1";
+            this.Name = "MangaScraper";
             this.Text = "MangaScraper for Mangahere.co";
             this.radioGroupBox.ResumeLayout(false);
             this.radioGroupBox.PerformLayout();

@@ -15,9 +15,7 @@ public class WebPage
 {
     public WebPage()
     {
-        //
-        // TODO: Add constructor logic here
-        //
+
     }
 
     public string getDomain(string url)

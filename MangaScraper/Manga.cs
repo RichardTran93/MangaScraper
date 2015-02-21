@@ -14,6 +14,5 @@ namespace MangaScraper
         string getChapter(string html);
         string getPage(string html);
         string getNextChapter(string html);
-
     }
 }
