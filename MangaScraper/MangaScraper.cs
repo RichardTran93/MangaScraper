@@ -104,19 +104,23 @@ namespace MangaScraper
                     {
                         case "mangahere":
                             {
+                                url = mangaHere.getNextURL(html);
+                                if (url == "null")
+                                    break; 
                                 series = mangaHere.getSeriesName(html);
                                 chapter = mangaHere.getChapter(html);
                                 page = mangaHere.getPage(html);
-                                url = mangaHere.getNextURL(html);
                                 extracted = mangaHere.extractJPGFromHTML(html);
                                 break;
                             }
                         case "mangapanda":
                             {
+                                url = mangaPanda.getNextURL(html);
+                                if (url == "null")
+                                    break; 
                                 series = mangaPanda.getSeriesName(html);
                                 chapter = mangaPanda.getChapter(html);
                                 page = mangaPanda.getPage(html);
-                                url = mangaPanda.getNextURL(html);
                                 extracted = mangaPanda.extractJPGFromHTML(html);
                                 break;
                             }
@@ -153,6 +157,7 @@ namespace MangaScraper
                     return;
                 }
             }
+            Application.DoEvents();
         }
 
         private void stopButton_Click(object sender, EventArgs e)
