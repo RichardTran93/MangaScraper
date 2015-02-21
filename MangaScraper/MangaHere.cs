@@ -17,18 +17,19 @@ namespace MangaScraper
         {
 
         }
-        public string getFirstPage(string html)
+        public string getFirstPage(string html)//the hacks are real
         {
-            //...Chapter Name</th> ... a href="URL HERE">
-            int index = html.IndexOf("Chapter Name</th>");
-            string url = html.Substring(index);
-            //Chapter Name</th> ... a href="URL HERE">
-            index = url.IndexOf("a href=");
+            //...href="URL HERE" ...</span> ... </span>
+            //yes, it's that hacky, find second to last /span, then first last instance of href
+            int index = html.LastIndexOf("</span>");
+            string url = html.Substring(0,index);
+            //...href="URL HERE" ...</span>
+            index = url.LastIndexOf("href=");
             url = url.Substring(index);
-            //a href="URL HERE"
+            //href="URL HERE"...
             index = url.IndexOf("\"");
-            url = url.Substring(index);
-            //URL HERE">
+            url = url.Substring(index + 1);
+            //URL HERE"...
             index = url.IndexOf("\"");
             url = url.Substring(0, index);
             //URL HERE
@@ -36,7 +37,7 @@ namespace MangaScraper
         }
         public bool checkMainPage(string html)
         {
-            int index = html.IndexOf("LATEST CHAPTERS");//if this exists, we're on the page page
+            int index = html.IndexOf("Sign in");//if this exists, we're on the page page. the hacks are real
             if (index == -1)
                 return false;
             else
