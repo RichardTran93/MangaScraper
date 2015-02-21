@@ -8,6 +8,8 @@ namespace MangaScraper
 {
     public interface Manga
     {
+        bool checkMainPage(string html);
+        string getFirstPage(string html);
         string extractJPGFromHTML(string html);
         string getNextURL(string html);
         string getSeriesName(string html);

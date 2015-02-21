@@ -14,6 +14,31 @@ namespace MangaScraper
 {
     public class MangaPanda : Manga
     {
+        public string getFirstPage(string html)
+        {
+            //...Chapter Name</th> ... a href="URL HERE">
+            int index = html.IndexOf("Chapter Name</th>");
+            string url = html.Substring(index);
+            //Chapter Name</th> ... a href="URL HERE">
+            index = url.IndexOf("a href=");
+            url = url.Substring(index);
+            //a href="URL HERE"
+            index = url.IndexOf("\"");
+            url = url.Substring(index+1);
+            //URL HERE">
+            index = url.IndexOf("\"");
+            url = url.Substring(0, index);
+            //URL HERE
+            return "http://www.mangapanda.com" + url;
+        }
+        public bool checkMainPage(string html)
+        {
+            int index = html.IndexOf("LATEST CHAPTERS");//if this exists, we're on the page page
+            if (index == -1)
+                return false;
+            else
+                return true;
+        }
         public string extractJPGFromHTML(string html)
         {
             //src="URL WE WANT HERE" alt="Bleach 616 .....

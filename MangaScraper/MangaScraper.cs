@@ -118,13 +118,16 @@ namespace MangaScraper
                 return;
             }
             
+            //check if on main page or in some chapter
+            if (manga.checkMainPage(html))
+                url = manga.getFirstPage(html);
             while (true) // loop until can't find anymore urls
             {
                 
                     html = client.getHTML(url);//get raw html
                     if(html == "fail")
                     {
-                        MessageBox.Show("Invalid url. Please enter another one");
+                        MessageBox.Show(url + " is an invalid URL. Please enter another one");
                         return;
                     }
                     //pull series/chapter/page from html
@@ -187,7 +190,7 @@ namespace MangaScraper
             folders = false;
         }
 
-        private void label2_Click(object sender, EventArgs e)
+        private void githubLabel_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("https://github.com/RichardTran93/MangaScraper");
         }
