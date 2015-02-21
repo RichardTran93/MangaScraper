@@ -5,7 +5,7 @@ Release build is in MangaScraper/bin/Release folder
 
 ONLY WORKS FOR mangahere.co and mangapanda.com AT THE MOMENT!!!
 
-Pick any manga, at any chapter, at any page
+Pick any manga, at any chapter, at any page or the main page of the manga
 
 The scraper -->should<-- create a folder in the following structure
 mangaName/chapter/page.jpg
