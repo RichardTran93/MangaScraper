@@ -83,30 +83,55 @@ namespace MangaScraper
          */
         private void getJPGButton_Click(object sender, EventArgs e)
         {
-            string url = urlBox.Text;//gets the url from the box
-            MangaHere mangaHere = new MangaHere();
             WebPage client = new WebPage();
+            MangaHere mangaHere = new MangaHere();
+            MangaPanda mangaPanda = new MangaPanda();
+            downloadCount = 0;
+            completedCount = 0;
+            string url = urlBox.Text;//gets the url from the box
+
             string html = "";
-            string series, chapter, page, extracted = "";
+            string series = "";
+            string chapter = "";
+            string page = ""; 
+            string extracted = "";
             while (true) // loop until can't find anymore urls
             {
                 
                     html = client.getHTML(url);//get raw html
                     //pull series/chapter/page from html
-                    series = mangaHere.getSeriesName(html);
-                    chapter = mangaHere.getChapter(html);
-                    page = mangaHere.getPage(html);     
-               
-                    
-                    extracted = client.extractJPGFromHTML(html);//gets the jpg url 
-
+                    switch(client.getDomain(url))
+                    {
+                        case "mangahere":
+                            {
+                                series = mangaHere.getSeriesName(html);
+                                chapter = mangaHere.getChapter(html);
+                                page = mangaHere.getPage(html);
+                                url = mangaHere.getNextURL(html);
+                                extracted = mangaHere.extractJPGFromHTML(html);
+                                break;
+                            }
+                        case "mangapanda":
+                            {
+                                series = mangaPanda.getSeriesName(html);
+                                chapter = mangaPanda.getChapter(html);
+                                page = mangaPanda.getPage(html);
+                                url = mangaPanda.getNextURL(html);
+                                extracted = mangaPanda.extractJPGFromHTML(html);
+                                break;
+                            }
+                        default:
+                            System.Diagnostics.Debug.Write(client.getDomain(url));
+                            break;
+                    }
+                   
                     //actually download the jpg
                     downloadJPG(extracted, series, chapter, page);
                     downloadCount++;
                     refreshCount(series, chapter, page);//sets UI to updated chapter/page number
 
                     //prep for next url to get
-                    url = client.getNextURL(html);
+                    
                     if (url == "null")
                         break; 
 

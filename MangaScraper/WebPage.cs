@@ -15,6 +15,17 @@ public class WebPage
         //
     }
 
+    public string getDomain(string url)
+    {
+        //www.mangahere.co
+        int index = url.IndexOf(".");
+        url = url.Substring(index+1);
+        //mangahere.co
+        index = url.IndexOf(".");
+        url = url.Substring(0, index);
+        //mangahere
+        return url;
+    }
     public string getHTML(string url)
     {
         HttpWebRequest request;
@@ -39,14 +50,6 @@ public class WebPage
             Stream receiveStream = response.GetResponseStream();
             StreamReader readStream = null;
 
-            /* if (response.CharacterSet == null)
-               {
-
-               }
-               else
-               {
-               readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
-               }*/
             readStream = new StreamReader(receiveStream);
             html = readStream.ReadToEnd();
 
@@ -56,48 +59,4 @@ public class WebPage
         return html;
     }
 
-    public string extractJPGFromHTML(string html)
-    {
-        // string[] split = Regex.Split(html,"<img src=\"");//get the URL but contains ""
-        int index = html.IndexOf("img src=\"");//get first instance of img src=" at where i is
-        html = html.Substring(index + 9); // 9 is for each character of img src="
-        index = html.IndexOf("\""); // remove second " at the end of jpg url
-        html = html.Substring(0, index - 1);
-        return html;
-    }
-    public string getNextURL(string html)
-    {
-        string htmlBackup = html;
-        int index = html.IndexOf("return next_page();"); // get next page url
-
-        html = html.Substring(0, index); // 45 to get rid of the html, goes straight to the url
-
-        index = html.LastIndexOf("a href=\"");
-        html = html.Substring(index + 8); // get rid of a href="
-        index = html.IndexOf("\"");
-        html = html.Substring(0, index);
-
-        if (html == "javascript:void(0);")//if end of chapter, get next chapter
-            html = getNextChapter(htmlBackup);
-
-        return html;
-    }
-
-    public string getNextChapter(string html)
-    {
-        int index = html.IndexOf("Next Chapter:");//get index of next chapter url
-        if (index == -1)
-        {
-            return "null";
-        }
-
-        html = html.Substring(index);
-        index = html.IndexOf("\"");//start html at first "
-        html = html.Substring(index + 1);//get rid of the first "
-        index = html.IndexOf("\"");// end html at next "
-        html = html.Substring(0, index);
-
-
-        return html;
-    }
 }

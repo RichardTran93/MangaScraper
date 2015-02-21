@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MangaHere.cs" />
+    <Compile Include="MangaPanda.cs" />
     <Compile Include="MangaScraper.cs">
       <SubType>Form</SubType>
     </Compile>
