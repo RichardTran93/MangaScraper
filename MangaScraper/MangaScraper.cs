@@ -29,6 +29,7 @@ namespace MangaScraper
         Manga manga = new MangaPanda(); // default is MangaPanda
         List<string> mangaList = new List<string>();
         List<string> mangaLinks = new List<string>();
+        List<string> pageLinks = new List<string>();
         public MangaScraper()
         {
             InitializeComponent();
@@ -63,6 +64,7 @@ namespace MangaScraper
             
             mangaListBox.DataSource = mangaList;
             mangaListButton.Enabled = true;
+            downloadInstructionLabel.Visible = true;
         }
 
         /*this method sets the display of the UI to the current series name/chapter/page number*/

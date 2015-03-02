@@ -46,13 +46,15 @@
             this.mangaPandaButton = new System.Windows.Forms.RadioButton();
             this.mangaListButton = new System.Windows.Forms.Button();
             this.mangaHereButton = new System.Windows.Forms.RadioButton();
+            this.downloadInstructionLabel = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.radioGroupBox.SuspendLayout();
             this.mangaBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // urlBox
             // 
-            this.urlBox.Location = new System.Drawing.Point(239, 52);
+            this.urlBox.Location = new System.Drawing.Point(33, 137);
             this.urlBox.Name = "urlBox";
             this.urlBox.Size = new System.Drawing.Size(165, 35);
             this.urlBox.TabIndex = 0;
@@ -61,7 +63,7 @@
             // getJPGButton
             // 
             this.getJPGButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.getJPGButton.Location = new System.Drawing.Point(239, 105);
+            this.getJPGButton.Location = new System.Drawing.Point(33, 190);
             this.getJPGButton.Name = "getJPGButton";
             this.getJPGButton.Size = new System.Drawing.Size(84, 38);
             this.getJPGButton.TabIndex = 1;
@@ -72,7 +74,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(279, 23);
+            this.label1.Location = new System.Drawing.Point(73, 108);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(86, 13);
             this.label1.TabIndex = 2;
@@ -81,7 +83,7 @@
             // seriesLabel
             // 
             this.seriesLabel.AutoSize = true;
-            this.seriesLabel.Location = new System.Drawing.Point(237, 185);
+            this.seriesLabel.Location = new System.Drawing.Point(31, 270);
             this.seriesLabel.Name = "seriesLabel";
             this.seriesLabel.Size = new System.Drawing.Size(36, 13);
             this.seriesLabel.TabIndex = 4;
@@ -90,7 +92,7 @@
             // chapterLabel
             // 
             this.chapterLabel.AutoSize = true;
-            this.chapterLabel.Location = new System.Drawing.Point(237, 215);
+            this.chapterLabel.Location = new System.Drawing.Point(31, 300);
             this.chapterLabel.Name = "chapterLabel";
             this.chapterLabel.Size = new System.Drawing.Size(44, 13);
             this.chapterLabel.TabIndex = 5;
@@ -99,7 +101,7 @@
             // pageLabel
             // 
             this.pageLabel.AutoSize = true;
-            this.pageLabel.Location = new System.Drawing.Point(372, 215);
+            this.pageLabel.Location = new System.Drawing.Point(166, 300);
             this.pageLabel.Name = "pageLabel";
             this.pageLabel.Size = new System.Drawing.Size(32, 13);
             this.pageLabel.TabIndex = 6;
@@ -108,7 +110,7 @@
             // stopButton
             // 
             this.stopButton.CausesValidation = false;
-            this.stopButton.Location = new System.Drawing.Point(329, 105);
+            this.stopButton.Location = new System.Drawing.Point(123, 190);
             this.stopButton.Name = "stopButton";
             this.stopButton.Size = new System.Drawing.Size(75, 38);
             this.stopButton.TabIndex = 7;
@@ -121,7 +123,7 @@
             this.radioGroupBox.BackColor = System.Drawing.Color.Transparent;
             this.radioGroupBox.Controls.Add(this.radioOrganize1);
             this.radioGroupBox.Controls.Add(this.radioOrganize0);
-            this.radioGroupBox.Location = new System.Drawing.Point(12, 52);
+            this.radioGroupBox.Location = new System.Drawing.Point(55, 12);
             this.radioGroupBox.Name = "radioGroupBox";
             this.radioGroupBox.Size = new System.Drawing.Size(119, 75);
             this.radioGroupBox.TabIndex = 8;
@@ -156,7 +158,7 @@
             // githubLabel
             // 
             this.githubLabel.AutoSize = true;
-            this.githubLabel.Location = new System.Drawing.Point(-1, 247);
+            this.githubLabel.Location = new System.Drawing.Point(9, 372);
             this.githubLabel.Name = "githubLabel";
             this.githubLabel.Size = new System.Drawing.Size(237, 13);
             this.githubLabel.TabIndex = 9;
@@ -194,7 +196,7 @@
             this.mangaBox.Controls.Add(this.mangaPandaButton);
             this.mangaBox.Controls.Add(this.mangaListButton);
             this.mangaBox.Controls.Add(this.mangaHereButton);
-            this.mangaBox.Location = new System.Drawing.Point(282, 264);
+            this.mangaBox.Location = new System.Drawing.Point(281, 128);
             this.mangaBox.Name = "mangaBox";
             this.mangaBox.Size = new System.Drawing.Size(200, 100);
             this.mangaBox.TabIndex = 13;
@@ -232,6 +234,25 @@
             this.mangaHereButton.Text = "MangaHere";
             this.mangaHereButton.UseVisualStyleBackColor = true;
             // 
+            // downloadInstructionLabel
+            // 
+            this.downloadInstructionLabel.AutoSize = true;
+            this.downloadInstructionLabel.Location = new System.Drawing.Point(551, 23);
+            this.downloadInstructionLabel.Name = "downloadInstructionLabel";
+            this.downloadInstructionLabel.Size = new System.Drawing.Size(162, 13);
+            this.downloadInstructionLabel.TabIndex = 14;
+            this.downloadInstructionLabel.Text = "Double click manga to download";
+            this.downloadInstructionLabel.Visible = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(295, 112);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(175, 13);
+            this.label2.TabIndex = 15;
+            this.label2.Text = "Use this to select from a list instead!";
+            // 
             // MangaScraper
             // 
             this.AcceptButton = this.getJPGButton;
@@ -239,6 +260,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.getJPGButton;
             this.ClientSize = new System.Drawing.Size(809, 394);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.downloadInstructionLabel);
             this.Controls.Add(this.mangaBox);
             this.Controls.Add(this.mangaListBox);
             this.Controls.Add(this.completedLabel);
@@ -283,6 +306,8 @@
         private System.Windows.Forms.RadioButton mangaPandaButton;
         private System.Windows.Forms.RadioButton mangaHereButton;
         private System.Windows.Forms.Button mangaListButton;
+        private System.Windows.Forms.Label downloadInstructionLabel;
+        private System.Windows.Forms.Label label2;
     }
 }
 
