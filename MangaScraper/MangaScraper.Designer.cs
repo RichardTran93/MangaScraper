@@ -31,7 +31,6 @@
             this.urlBox = new System.Windows.Forms.RichTextBox();
             this.getJPGButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.statusLabel = new System.Windows.Forms.Label();
             this.seriesLabel = new System.Windows.Forms.Label();
             this.chapterLabel = new System.Windows.Forms.Label();
             this.pageLabel = new System.Windows.Forms.Label();
@@ -40,6 +39,8 @@
             this.radioOrganize1 = new System.Windows.Forms.RadioButton();
             this.radioOrganize0 = new System.Windows.Forms.RadioButton();
             this.githubLabel = new System.Windows.Forms.Label();
+            this.downloadLabel = new System.Windows.Forms.Label();
+            this.completedLabel = new System.Windows.Forms.Label();
             this.radioGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -70,17 +71,6 @@
             this.label1.Size = new System.Drawing.Size(86, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "Enter URL Here!";
-            // 
-            // statusLabel
-            // 
-            this.statusLabel.AutoSize = true;
-            this.statusLabel.CausesValidation = false;
-            this.statusLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.statusLabel.Location = new System.Drawing.Point(236, 158);
-            this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(37, 13);
-            this.statusLabel.TabIndex = 3;
-            this.statusLabel.Text = "Status";
             // 
             // seriesLabel
             // 
@@ -167,6 +157,22 @@
             this.githubLabel.Text = "www.github.com/RichardTran93/MangaScraper";
             this.githubLabel.Click += new System.EventHandler(this.githubLabel_Click);
             // 
+            // downloadLabel
+            // 
+            this.downloadLabel.AutoSize = true;
+            this.downloadLabel.Location = new System.Drawing.Point(12, 149);
+            this.downloadLabel.Name = "downloadLabel";
+            this.downloadLabel.Size = new System.Drawing.Size(0, 13);
+            this.downloadLabel.TabIndex = 10;
+            // 
+            // completedLabel
+            // 
+            this.completedLabel.AutoSize = true;
+            this.completedLabel.Location = new System.Drawing.Point(12, 203);
+            this.completedLabel.Name = "completedLabel";
+            this.completedLabel.Size = new System.Drawing.Size(0, 13);
+            this.completedLabel.TabIndex = 11;
+            // 
             // MangaScraper
             // 
             this.AcceptButton = this.getJPGButton;
@@ -174,13 +180,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.getJPGButton;
             this.ClientSize = new System.Drawing.Size(428, 261);
+            this.Controls.Add(this.completedLabel);
+            this.Controls.Add(this.downloadLabel);
             this.Controls.Add(this.githubLabel);
             this.Controls.Add(this.radioGroupBox);
             this.Controls.Add(this.stopButton);
             this.Controls.Add(this.pageLabel);
             this.Controls.Add(this.chapterLabel);
             this.Controls.Add(this.seriesLabel);
-            this.Controls.Add(this.statusLabel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.getJPGButton);
             this.Controls.Add(this.urlBox);
@@ -198,7 +205,6 @@
         private System.Windows.Forms.RichTextBox urlBox;
         private System.Windows.Forms.Button getJPGButton;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label statusLabel;
         private System.Windows.Forms.Label seriesLabel;
         private System.Windows.Forms.Label chapterLabel;
         private System.Windows.Forms.Label pageLabel;
@@ -207,6 +213,8 @@
         private System.Windows.Forms.RadioButton radioOrganize1;
         private System.Windows.Forms.RadioButton radioOrganize0;
         private System.Windows.Forms.Label githubLabel;
+        private System.Windows.Forms.Label downloadLabel;
+        private System.Windows.Forms.Label completedLabel;
     }
 }
 
