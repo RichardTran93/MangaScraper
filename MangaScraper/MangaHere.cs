@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 /* Richard Tran
  * Manga Scraper
@@ -13,8 +15,31 @@ namespace MangaScraper
 {
     public class MangaHere : Manga
     {
-        public MangaHere()
+        List<string> mangaNames = new List<string>();
+        List<string> mangaLinks = new List<string>();
+
+        public List<string> getMangaNames()
         {
+            return mangaNames;
+        }
+
+        public List<string> getMangaLinks()
+        {
+            return mangaLinks;
+        }
+        public void setMangaList(string html)
+        {
+            string[] a = { "" };
+            Regex regex = new Regex(@"manga_info"" rel=""(.*?)"" href=""(.*?)""");
+            string name = "";
+            foreach (Match match in regex.Matches(html))
+            {
+                name = match.Groups[1].Value.Replace("&quot;", "\"");
+                name = name.Replace("&amp;", "&");//sanitize bullshit escape characters
+                mangaNames.Add(name);
+                mangaLinks.Add(match.Groups[2].Value);
+               // Console.WriteLine(match.Groups[1].Value);
+            }
 
         }
         public string getFirstPage(string html)//the hacks are real

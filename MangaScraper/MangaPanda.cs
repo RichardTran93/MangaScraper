@@ -14,6 +14,34 @@ namespace MangaScraper
 {
     public class MangaPanda : Manga
     {
+        List<string> mangaNames = new List<string>();
+        List<string> mangaLinks = new List<string>();
+
+        public List<string> getMangaNames()
+        {
+            return mangaNames;
+        }
+
+        public List<string> getMangaLinks()
+        {
+            return mangaLinks;
+        }
+        public void setMangaList(string html)
+        {
+            int index = html.IndexOf("ul class=\"series_alpha");//get rid of unnecessary part so pattern can work
+            html = html.Substring(index);
+            Regex regex = new Regex(@"li><a href=""(.*?)"">(.*?)<");
+            //Console.WriteLine("\n");
+            string name = "";
+            foreach(Match match in regex.Matches(html))
+            {
+                name = match.Groups[2].Value.Replace("&quot;", "\"");
+                name = name.Replace("&amp;", "&");//sanitize bullshit escape characters
+                mangaNames.Add(name);
+                mangaLinks.Add("http://www.mangapanda.com" + match.Groups[1].Value);
+            }
+
+        }
         public string getFirstPage(string html)
         {
             //...Chapter Name</th> ... a href="URL HERE">

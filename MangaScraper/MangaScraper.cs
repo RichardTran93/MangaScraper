@@ -26,18 +26,43 @@ namespace MangaScraper
         bool folders = true;
         WebPage client = new WebPage();
         Manga manga = new MangaHere(); // default is MangaHere
+        List<string> mangaList = new List<string>();
+        List<string> mangaLinks = new List<string>();
         public MangaScraper()
         {
             InitializeComponent();
             radioOrganize1.Checked = true;
-
+            mangaHereButton.Checked = true;
         }
         private void displayStatus(string status)
         {
             //statusLabel.Text = status;//set textbox to current status
         }
         
-        
+        private void populateMangaListBox()
+        {
+            mangaListButton.Text = "Getting List of Mangas!";
+            mangaListButton.Enabled = false;
+            
+            if (mangaHereButton.Checked)
+            {
+                MangaHere manga = new MangaHere();
+                manga.setMangaList(client.getHTML("http://www.mangahere.co/mangalist/"));
+                mangaList = manga.getMangaNames();
+                mangaLinks = manga.getMangaLinks();
+            }
+            else if (mangaPandaButton.Checked)
+            {
+                MangaPanda manga = new MangaPanda();
+                manga.setMangaList(client.getHTML("http://www.mangapanda.com/alphabetical"));
+                mangaList = manga.getMangaNames();
+                mangaLinks = manga.getMangaLinks();
+            }
+
+            
+            mangaListBox.DataSource = mangaList;
+            mangaListButton.Enabled = true;
+        }
 
         /*this method sets the display of the UI to the current series name/chapter/page number*/
         private void refreshCount(string series, string chapter, string page)
@@ -54,13 +79,8 @@ namespace MangaScraper
             Application.DoEvents();
         }
 
-        /*when get manga button is clicked, extract url from the textbox
-         * then extract the html, then get the jpg link from the html and
-         * download everything
-         */
-        private void getJPGButton_Click(object sender, EventArgs e)
+        private void download(string url)
         {
-            
             string html = "";
             string series = "";
             string chapter = "";
@@ -68,9 +88,15 @@ namespace MangaScraper
             string extracted = "";
             downloadCount = 0;
             client.reset();
-            string url = urlBox.Text;//gets the url from the box
+            if(url == "blank")
+                url = urlBox.Text;//gets the url from the box
+            if (url == "")
+            {
+                MessageBox.Show("Please enter url into the box first!");
+                return;
+            }
             html = client.getHTML(url);
-            switch(client.getDomain(url))
+            switch (client.getDomain(url))
             {
                 case "mangahere":
                     {
@@ -83,56 +109,54 @@ namespace MangaScraper
                         break;
                     }
             }
-            if(url == "")
-            {
-                MessageBox.Show("Please enter url into the box first!");
-                return;
-            }
             
+
             //check if on main page or in some chapter
             if (manga.checkMainPage(html))
                 url = manga.getFirstPage(html);
             while (true) // loop until can't find anymore urls
             {
-                
-                    html = client.getHTML(url);//get raw html
-                    if(html == "fail")
-                    {
-                        MessageBox.Show(url + " is an invalid URL. Please enter another one");
-                        return;
-                    }
-                    //pull series/chapter/page from html
-                    
-                                
+
+                html = client.getHTML(url);//get raw html
+                if (html == "fail")
+                {
+                    MessageBox.Show(url + " is an invalid URL. Please enter another one");
+                    return;
+                }
+                //pull series/chapter/page from html
+
+
                 url = manga.getNextURL(html);
                 if (url == "null")
-                    break;                               
-                series = manga.getSeriesName(html);                                
-                chapter = manga.getChapter(html);                                
-                page = manga.getPage(html);                                
+                    break;
+                series = manga.getSeriesName(html);
+                chapter = manga.getChapter(html);
+                page = manga.getPage(html);
                 extracted = manga.extractJPGFromHTML(html);
-                
-                       
-                   
-                    //actually download the jpg
-                    client.downloadJPG(extracted, series, chapter, page, downloadCount, folders);
-                    downloadCount++;
-                    refreshCount(series, chapter, page);//sets UI to updated chapter/page number
 
-                    //prep for next url to get
-                    
-                    if (url == "null")
-                        break; 
 
-                    if(stopRequest)
-                    {
-                        MessageBox.Show("Stopped downloading " + series + " after " + Convert.ToString(downloadCount) + " pages");
-                        stopRequest = false;
-                        return;
-                    }
-                   
+
+                //actually download the jpg
+                client.downloadJPG(extracted, series, chapter, page, downloadCount, folders);
+                downloadCount++;
+                refreshCount(series, chapter, page);//sets UI to updated chapter/page number
+
+                //prep for next url to get
+
+                if (url == "null")
+                    break;
+
+                if (stopRequest)
+                {
+                    downloadCount = client.getCompletedCount();
+                    Application.DoEvents();
+                    MessageBox.Show("Stopped downloading " + series + " after " + Convert.ToString(downloadCount) + " pages");
+                    stopRequest = false;
+                    return;
+                }
+
             }
-            while(true)//this loop waits for all pages to complete before saying it's finished everything
+            while (true)//this loop waits for all pages to complete before saying it's finished everything
             {
                 refreshCount(series, chapter, page);
                 if (client.getCompletedCount() == downloadCount)
@@ -143,6 +167,15 @@ namespace MangaScraper
                     return;
                 }
             }
+        }
+
+        /*when get manga button is clicked, extract url from the textbox
+         * then extract the html, then get the jpg link from the html and
+         * download everything
+         */
+        private void getJPGButton_Click(object sender, EventArgs e)
+        {
+            download("blank");          
         }
 
         private void stopButton_Click(object sender, EventArgs e)
@@ -165,6 +198,22 @@ namespace MangaScraper
         {
             System.Diagnostics.Process.Start("https://github.com/RichardTran93/MangaScraper");
         }
-  
+
+        private void mangaListButton_Click(object sender, EventArgs e)
+        {
+            //mangaListBox.Items.Clear();
+            populateMangaListBox();
+        }
+
+        private void mangaListBox_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+
+            int index = this.mangaListBox.IndexFromPoint(e.Location);
+            if (index != System.Windows.Forms.ListBox.NoMatches)
+            {
+                download(mangaLinks[index]);
+            }
+        }
+      
     }
 }

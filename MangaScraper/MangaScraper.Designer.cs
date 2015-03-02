@@ -41,7 +41,13 @@
             this.githubLabel = new System.Windows.Forms.Label();
             this.downloadLabel = new System.Windows.Forms.Label();
             this.completedLabel = new System.Windows.Forms.Label();
+            this.mangaListBox = new System.Windows.Forms.ListBox();
+            this.mangaBox = new System.Windows.Forms.GroupBox();
+            this.mangaPandaButton = new System.Windows.Forms.RadioButton();
+            this.mangaListButton = new System.Windows.Forms.Button();
+            this.mangaHereButton = new System.Windows.Forms.RadioButton();
             this.radioGroupBox.SuspendLayout();
+            this.mangaBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // urlBox
@@ -173,13 +179,68 @@
             this.completedLabel.Size = new System.Drawing.Size(0, 13);
             this.completedLabel.TabIndex = 11;
             // 
+            // mangaListBox
+            // 
+            this.mangaListBox.FormattingEnabled = true;
+            this.mangaListBox.Location = new System.Drawing.Point(504, 48);
+            this.mangaListBox.Name = "mangaListBox";
+            this.mangaListBox.ScrollAlwaysVisible = true;
+            this.mangaListBox.Size = new System.Drawing.Size(251, 316);
+            this.mangaListBox.TabIndex = 12;
+            this.mangaListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.mangaListBox_MouseDoubleClick);
+            // 
+            // mangaBox
+            // 
+            this.mangaBox.Controls.Add(this.mangaPandaButton);
+            this.mangaBox.Controls.Add(this.mangaListButton);
+            this.mangaBox.Controls.Add(this.mangaHereButton);
+            this.mangaBox.Location = new System.Drawing.Point(282, 264);
+            this.mangaBox.Name = "mangaBox";
+            this.mangaBox.Size = new System.Drawing.Size(200, 100);
+            this.mangaBox.TabIndex = 13;
+            this.mangaBox.TabStop = false;
+            // 
+            // mangaPandaButton
+            // 
+            this.mangaPandaButton.AutoSize = true;
+            this.mangaPandaButton.Location = new System.Drawing.Point(3, 39);
+            this.mangaPandaButton.Name = "mangaPandaButton";
+            this.mangaPandaButton.Size = new System.Drawing.Size(89, 17);
+            this.mangaPandaButton.TabIndex = 1;
+            this.mangaPandaButton.TabStop = true;
+            this.mangaPandaButton.Text = "MangaPanda";
+            this.mangaPandaButton.UseVisualStyleBackColor = true;
+            // 
+            // mangaListButton
+            // 
+            this.mangaListButton.Location = new System.Drawing.Point(38, 71);
+            this.mangaListButton.Name = "mangaListButton";
+            this.mangaListButton.Size = new System.Drawing.Size(125, 23);
+            this.mangaListButton.TabIndex = 14;
+            this.mangaListButton.Text = "Get List of Manga";
+            this.mangaListButton.UseVisualStyleBackColor = true;
+            this.mangaListButton.Click += new System.EventHandler(this.mangaListButton_Click);
+            // 
+            // mangaHereButton
+            // 
+            this.mangaHereButton.AutoSize = true;
+            this.mangaHereButton.Location = new System.Drawing.Point(3, 16);
+            this.mangaHereButton.Name = "mangaHereButton";
+            this.mangaHereButton.Size = new System.Drawing.Size(81, 17);
+            this.mangaHereButton.TabIndex = 0;
+            this.mangaHereButton.TabStop = true;
+            this.mangaHereButton.Text = "MangaHere";
+            this.mangaHereButton.UseVisualStyleBackColor = true;
+            // 
             // MangaScraper
             // 
             this.AcceptButton = this.getJPGButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.getJPGButton;
-            this.ClientSize = new System.Drawing.Size(428, 261);
+            this.ClientSize = new System.Drawing.Size(809, 394);
+            this.Controls.Add(this.mangaBox);
+            this.Controls.Add(this.mangaListBox);
             this.Controls.Add(this.completedLabel);
             this.Controls.Add(this.downloadLabel);
             this.Controls.Add(this.githubLabel);
@@ -195,6 +256,8 @@
             this.Text = "MangaScraper";
             this.radioGroupBox.ResumeLayout(false);
             this.radioGroupBox.PerformLayout();
+            this.mangaBox.ResumeLayout(false);
+            this.mangaBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -215,6 +278,11 @@
         private System.Windows.Forms.Label githubLabel;
         private System.Windows.Forms.Label downloadLabel;
         private System.Windows.Forms.Label completedLabel;
+        private System.Windows.Forms.ListBox mangaListBox;
+        private System.Windows.Forms.GroupBox mangaBox;
+        private System.Windows.Forms.RadioButton mangaPandaButton;
+        private System.Windows.Forms.RadioButton mangaHereButton;
+        private System.Windows.Forms.Button mangaListButton;
     }
 }
 
