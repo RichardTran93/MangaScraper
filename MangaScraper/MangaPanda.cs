@@ -105,7 +105,6 @@ namespace MangaScraper
             index = series.IndexOf(" Manga");
             series = series.Substring(0, index);
             //"I Don't Want This Kind of Hero
-
             return series;
         }
 

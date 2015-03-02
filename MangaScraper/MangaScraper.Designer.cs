@@ -203,7 +203,7 @@
             // mangaPandaButton
             // 
             this.mangaPandaButton.AutoSize = true;
-            this.mangaPandaButton.Location = new System.Drawing.Point(3, 39);
+            this.mangaPandaButton.Location = new System.Drawing.Point(6, 16);
             this.mangaPandaButton.Name = "mangaPandaButton";
             this.mangaPandaButton.Size = new System.Drawing.Size(89, 17);
             this.mangaPandaButton.TabIndex = 1;
@@ -224,7 +224,7 @@
             // mangaHereButton
             // 
             this.mangaHereButton.AutoSize = true;
-            this.mangaHereButton.Location = new System.Drawing.Point(3, 16);
+            this.mangaHereButton.Location = new System.Drawing.Point(6, 39);
             this.mangaHereButton.Name = "mangaHereButton";
             this.mangaHereButton.Size = new System.Drawing.Size(81, 17);
             this.mangaHereButton.TabIndex = 0;

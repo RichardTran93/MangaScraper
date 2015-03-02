@@ -24,15 +24,16 @@ namespace MangaScraper
         
         bool stopRequest = false;
         bool folders = true;
+        bool tryAgain = false;
         WebPage client = new WebPage();
-        Manga manga = new MangaHere(); // default is MangaHere
+        Manga manga = new MangaPanda(); // default is MangaPanda
         List<string> mangaList = new List<string>();
         List<string> mangaLinks = new List<string>();
         public MangaScraper()
         {
             InitializeComponent();
             radioOrganize1.Checked = true;
-            mangaHereButton.Checked = true;
+            mangaPandaButton.Checked = true;
         }
         private void displayStatus(string status)
         {
@@ -79,6 +80,13 @@ namespace MangaScraper
             Application.DoEvents();
         }
 
+        private string sanitize(string series)
+        {
+            string[] illegal = {"/","?","<",">","\\",":","*","|","\""};
+            for(int i = 0; i < illegal.Length; i++)
+                series = series.Replace(illegal[i]," ");
+            return series;
+        }
         private void download(string url)
         {
             string html = "";
@@ -120,6 +128,11 @@ namespace MangaScraper
                 html = client.getHTML(url);//get raw html
                 if (html == "fail")
                 {
+                    if(!tryAgain)//prevent one false, if fails again consecutively, fail
+                    {
+                        tryAgain = true;
+                        continue;
+                    }
                     MessageBox.Show(url + " is an invalid URL. Please enter another one");
                     return;
                 }
@@ -130,6 +143,7 @@ namespace MangaScraper
                 if (url == "null")
                     break;
                 series = manga.getSeriesName(html);
+                series = sanitize(series);//get rid of illegal filename characters
                 chapter = manga.getChapter(html);
                 page = manga.getPage(html);
                 extracted = manga.extractJPGFromHTML(html);
@@ -154,7 +168,12 @@ namespace MangaScraper
                     stopRequest = false;
                     return;
                 }
-
+                tryAgain = true;
+                while((downloadCount - client.getCompletedCount()) > 15)//anti-lag
+                {
+                    refreshCount(series, chapter, page);
+                    Application.DoEvents();
+                }
             }
             while (true)//this loop waits for all pages to complete before saying it's finished everything
             {
